@@ -1,8 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
-
 import * as Location from 'expo-location';
-
 import { useNavigation } from '../utils';
 
 const screenWidth = Dimensions.get('screen').width;
@@ -24,7 +22,6 @@ const LandingScreen = () => {
       if (status !== 'granted') {
         setErrorMsg('Permission to access location is not granted');
       }
-
       let location: any = await Location.getCurrentPositionAsync({});
 
       const { coords } = location;

@@ -1,9 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import LandingScreen from './src/screens/LandingScreen';
 import HomeScreen from './src/screens/HomeScreen';
-
+import { Provider } from 'react-redux';
+import { store } from './src/redux';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -93,7 +93,9 @@ const switchNavigator = createSwitchNavigator({
 const AppNavigation = createAppContainer(switchNavigator);
 
 export default function App() {
-  return <AppNavigation />;
+  <Provider store={store}>
+    <AppNavigation />
+  </Provider>;
 }
 
 const styles = StyleSheet.create({
