@@ -1,7 +1,6 @@
 import { LocationGeocodedAddress } from 'expo-location';
-import axios from 'axios';
 import { Dispatch } from 'react';
-import { BASE_URL } from '../../utils';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export interface UpdateLocationAction {
   readonly type: 'ON_UPDATE_LOCATION';
@@ -18,6 +17,8 @@ export type UserAction = UpdateLocationAction | UserErrorAction;
 export const onUpdateLocation = (location: LocationGeocodedAddress) => {
   return async (dispatch: Dispatch<UserAction>) => {
     try {
+      const locationString = JSON.stringify(location);
+      await AsyncStorage.setItem('user_location', locationString);
       dispatch({
         type: 'ON_UPDATE_LOCATION',
         payload: location,

@@ -1,11 +1,27 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import { connect } from 'react-redux';
+import {
+  onAvailability,
+  UserState,
+  ApplicationState,
+  ShoppingState,
+} from '../redux';
 
-const HomeScreen = () => {
+interface HomeProps {
+  userReducer: UserState;
+  shoppingReducer: ShoppingState;
+  onAvailability: Function;
+}
+
+export const _HomeScreen: React.FC<HomeProps> = (props) => {
+  const { location } = props.userReducer;
+  const { availability } = props.shoppingReducer;
+
   return (
     <View style={styles.container}>
       <View style={styles.navigation}>
-        <Text>Navigation</Text>
+        <Text>Navigation {JSON.stringify(location)}</Text>
       </View>
 
       <View style={styles.body}>
@@ -40,4 +56,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+const mapToStateProps = (state: ApplicationState) => ({
+  userReducer: state.useReducer,
+  shoppingReducer: state.shoppingReducer,
+});
+
+const HomeScreen = connect(mapToStateProps, { onAvailability })(_HomeScreen);
+export { HomeScreen };
